@@ -1,0 +1,28 @@
+---
+- name: Update apt cache.
+  apt:
+    cache_valid_time: 3600
+    update_cache: true
+  become: true
+  when: conky_autoupdate_enabled | bool
+
+- name: Install conky if it's not already installed.
+  ansible.builtin.apt:
+    name: conky
+    state: present
+  become: true
+  when: conky_install_conky | bool
+
+- name: Install util-linux if it's not already installed.
+  ansible.builtin.apt:
+    name: util-linux
+    state: present
+  become: true
+  when: conky_install_util_linux | bool
+
+- name: Install hddtemp if it's not already installed.
+  ansible.builtin.apt:
+    name: hddtemp
+    state: present
+  become: true
+  when: conky_install_hddtemp | bool
