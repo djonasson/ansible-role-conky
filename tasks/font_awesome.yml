@@ -1,0 +1,30 @@
+---
+- name: Make sure unzip is installed so we can unpack the fonts file.
+  ansible.builtin.apt:
+    name: unzip
+    state: present
+  become: true
+  when: conky_install_unzip | bool
+
+- name: Make sure fontconfig is installed so we can rebuild the font cache.
+  ansible.builtin.apt:
+    name: fontconfig
+    state: present
+  become: true
+  when: conky_install_fontconfig | bool
+
+- name: Make sure the fonts directory exists.
+  ansible.builtin.file:
+    path: "{{ fonts_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download and unpack the free version of font awesome.
+  ansible.builtin.unarchive:
+    src: "{{ font_awesome_uri }}"
+    dest: "{{ fonts_dir }}"
+    remote_src: true
+
+- name: Rebuild the font cache.
+  ansible.builtin.command: fc-cache -f -v
+  changed_when: false
