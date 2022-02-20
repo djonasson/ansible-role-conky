@@ -1,0 +1,20 @@
+---
+# APT Packages
+- include_tasks: packages.yml
+
+# Font Awesome
+- include_tasks: font_awesome.yml
+  when: conky_install_font_awesome | bool
+
+# Configure Conky.
+- name: Make sure the conky configuration directory exists.
+  ansible.builtin.file:
+    path: "{{ conky_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Add a conky configuration file.
+  ansible.builtin.template:
+    src: templates/conky.conf.j2
+    dest: "{{ conky_config_dir }}/conky.conf"
+    mode: "0644"
