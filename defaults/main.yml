@@ -1,0 +1,21 @@
+---
+conky_config_dir: "{{ lookup('env', 'XDG_CONFIG_HOME') | default(ansible_user_dir + '/.config', true) }}/conky"
+
+conky_autoupdate_enabled: true
+conky_install_conky: true
+conky_install_font_awesome: true
+conky_install_fontconfig: true
+conky_install_hddtemp: true
+conky_install_unzip: true
+conky_install_util_linux: true
+
+config:
+  font: "Ubuntu:style=medium:size=10"
+  main_network_interface: "enp6s0"
+font_awesome_uri: https://use.fontawesome.com/releases/v5.15.4/fontawesome-free-5.15.4-desktop.zip
+fonts_dir: "~/.fonts"
+
+# repo: "https://github.com/djonasson/conky-config.git"
+# dest: "~/.config/conky"
+# version: master
+# accept_hostkey: false
